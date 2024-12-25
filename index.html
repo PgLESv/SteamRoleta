@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roleta de Aplicativos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: grid;
+            place-items: center;
+        }
+
+        #roleta {
+            margin-top: 20px;
+            width: 3000px;
+            height: 3000px;
+            border: 5px solid #000;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+        .segmento-roleta {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-origin: center center;
+            clip-path: polygon(50%, 50%, 0 0, 0 100%);
+        }
+        .app {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate();
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: black;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            white-space: nowrap;
+            width: 80%;
+            height: 80%;
+        }
+        #botao {
+            margin-top: 20px;
+            padding: 5px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="roleta"></div>
+    <button id="botao">Girar Roleta</button>
+
+    <script type="module" src="test.js"></script>
+</body>
+</html>
