@@ -28,7 +28,9 @@ async function fetchApps() {
 
 function createRoleta(apps) {
     const roleta = document.getElementById('roleta');
+    roleta.innerHTML = ''; // Limpa a roleta antes de adicionar novos segmentos
     const angleStep = 360 / apps.length;
+    const fontSize = Math.max(12, 360 / apps.length); // Tamanho mínimo da fonte
 
     apps.forEach((app, index) => {
         if (!app || !app.name) {
@@ -38,10 +40,13 @@ function createRoleta(apps) {
         const wheelSegment = document.createElement('div');
         wheelSegment.className = 'segmento-roleta';
         wheelSegment.style.transform = `rotate(${index * angleStep}deg)`;
+
         const appElement = document.createElement('div');
         appElement.className = 'app';
-        // appElement.style.transform = `rotate(${index * angleStep}deg)`;
         appElement.innerText = app.name;
+        appElement.style.fontSize = `${fontSize}px`;
+        appElement.style.transform = `rotate(${angleStep / 2}deg)`; // Rotaciona o texto para centralizar
+
         roleta.appendChild(wheelSegment);
         wheelSegment.appendChild(appElement);
         console.log(`App adicionado: ${app.name}`);
@@ -49,15 +54,31 @@ function createRoleta(apps) {
 }
 
 function spinRoleta() {
-    const num = Math.floor(Math.random() * games.length) + 1;
+    const num = Math.floor(Math.random() * games.length);
     const roleta = document.getElementById('roleta');
-    // const randomAngle = Math.floor(Math.random() * 360) + (360 * 5); // Gira pelo menos 5 voltas
-    roleta.style.transition = 'transform 4s ease-out'
-    roleta.style.transform = `rotate(${1440 + 45 * (num - 1)}deg)`;
+    roleta.style.transition = 'transform 4s ease-out';
+    roleta.style.transform = `rotate(${1440 + 45 * num}deg)`;
+    
     setTimeout(() => {
-        alert(`O jogo é: ${games[num].name}`)
-        location.reload();
-    }, 1500)
+        const selectedGame = games[num];
+        exibirPopup(selectedGame.name);
+    }, 4000); // Sincroniza com a duração da rotação
+}
+
+function exibirPopup(nomeDoJogo) {
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('popup-overlay');
+    const popupText = document.getElementById('popup-text');
+    const popupClose = document.getElementById('popup-close');
+
+    popupText.innerText = nomeDoJogo;
+    popup.style.display = 'block';
+    overlay.style.display = 'block';
+
+    popupClose.addEventListener('click', () => {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+    });
 }
 
 document.getElementById('botao').addEventListener('click', spinRoleta);
